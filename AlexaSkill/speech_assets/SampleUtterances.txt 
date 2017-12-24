@@ -1,10 +1,12 @@
 OnIntent turn tree lights on
 OnIntent turn christmas tree lights on
 OnIntent start tree lights
+OnIntent on
 
 OffIntent turn tree lights off
 OffIntent turn christmas tree lights off
 OffIntent stop tree lights 
+OffIntent off
 
 BlueIntent turn tree lights blue
 BlueIntent turn christmas tree lights blue
@@ -12,6 +14,7 @@ BlueIntent show blue
 BlueIntent lights blue
 BlueIntent blue lights
 BlueIntent blue lights on tree
+BlueIntent blue
 
 PurpleIntent turn tree lights purple
 PurpleIntent turn christmas tree lights purple
@@ -19,6 +22,7 @@ PurpleIntent show purple
 PurpleIntent lights purple
 PurpleIntent purple lights
 PurpleIntent purple lights on tree
+PurpleIntent purple
 
 GreenIntent turn tree lights green
 GreenIntent turn christmas tree lights green
@@ -26,6 +30,7 @@ GreenIntent show green
 GreenIntent lights green
 GreenIntent green lights
 GreenIntent green lights on tree
+GreenIntent green
 
 RedIntent turn tree lights red
 RedIntent turn christmas tree lights red
@@ -33,6 +38,7 @@ RedIntent show red
 RedIntent lights red
 RedIntent red lights
 RedIntent red lights on tree
+RedIntent red
 
 OrangeIntent turn tree lights orange
 OrangeIntent turn christmas tree lights orange
@@ -40,7 +46,7 @@ OrangeIntent show orange
 OrangeIntent lights orange
 OrangeIntent orange lights
 OrangeIntent orange lights on tree
-
+OrangeIntent orange
 
 YellowIntent turn tree lights yellow
 YellowIntent turn christmas tree lights yellow
@@ -48,4 +54,22 @@ YellowIntent show yellow
 YellowIntent lights yellow
 YellowIntent yellow lights
 YellowIntent yellow lights on tree
+YellowIntent yellow
+
+ColorWipeIntent animate color wipe
+ColorWipeIntent show color wipe
+ColorWipeIntent do colorwipe
+ColorWipeIntent wipe color
+ColorWipeIntent animate
+
+TheaterChaseIntent animate theatre chase
+TheaterChaseIntent show theatre chase
+TheaterChaseIntent do theatre chase
+TheaterChaseIntent theatre chase
+
+RainbowIntent animate rainbow
+RainbowIntent show rainbow
+RainbowIntent do rainbow
+RainbowIntent wipe rainbow
+
 

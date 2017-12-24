@@ -7,7 +7,7 @@
 #define ANALOG_RGB     0 
 
 #define NEOPIXEL_PIN   D8 // Pin on which Neopicel LED strip is connected
-#define NUMPIXELS      60 // Number of Neopixels LEDs in strip
+#define NUMPIXELS      85 // Number of Neopixels LEDs in strip
 
 #define RED            D2
 #define GREEN          D5 // Pin mapping for Analog RGB LED strip
@@ -16,7 +16,7 @@
 // Variable to hold network parameters
 const char* ssid = "Xiaomi_3CF1";
 const char* password = "sska1234";
-const char* mqtt_server = "192.168.31.36"; //Address or IP
+const char* mqtt_server = "13.126.106.71"; //Address or IP
 const char* TOPIC = "cafeteria/trees";
 
 #if NEOPIXEL
@@ -29,6 +29,10 @@ PubSubClient client(espClient);
 
 // Declare setup WiFi and MQTT Callback functions
 void setup_wifi();
+void rainbow(uint8_t wait);
+void colorWipe(uint32_t c, uint8_t wait);
+uint32_t Wheel(byte WheelPos);
+void theaterChase(uint32_t c, uint8_t wait);
 void callback(char* , byte* , unsigned int); // MQTT callback function
 
 // Program starts here
@@ -89,20 +93,82 @@ void callback(char* topic, byte* payload, unsigned int length) {
   p[length] = NULL;
   String message(p);
 
-  //Parsing String to fetch RGB values independently in each variable:
-  int c1 = message.indexOf(',');
-  int c2 = message.indexOf(',',c1+1); // RGB values are sent in comma seperated order RR,GG,BB
 
-  int red = message.toInt();
-  int green = message.substring(c1+1).toInt(); // Value sent is 8-bit but ESP can do 10 bits PWM hence x By 4
-  int blue =  message.substring(c2+1).toInt();
+  if(message == "color-wipe") {
 
-  //Generating PWM corresponding to the RGB values
-  #if SERIAL_DEBUG
-  Serial.println(red);
-  Serial.println(green);
-  Serial.println(blue);
-  #endif
+    #if SERIAL_DEBUG
+    Serial.println("color-wipe");
+    #endif
+
+    colorWipe(strip.Color(255, 0, 0), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+
+  }
+
+  if(message == "theater-chase") {
+
+    #if SERIAL_DEBUG
+    Serial.println("theatre-chase");
+    #endif
+
+    colorWipe(strip.Color(255, 0, 0), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+    delay(100);
+
+    colorWipe(strip.Color(0, 255, 0), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+    delay(100);
+
+    colorWipe(strip.Color(0, 0, 255), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+    delay(100);
+  
+    colorWipe(strip.Color(255, 105, 180), 6);
+    colorWipe(strip.Color(0, 0, 0), 8);
+    delay(100);
+  
+    colorWipe(strip.Color(255, 0, 255), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+    delay(100);
+  
+    colorWipe(strip.Color(0, 139, 139), 6);
+    colorWipe(strip.Color(0, 0, 0), 6);
+    delay(100);
+
+  }
+
+
+  if(message == "rainbow") {
+
+    #if SERIAL_DEBUG
+    Serial.println("rainbow"); 
+    #endif
+
+    rainbow(20);
+
+  }
+
+  else
+  {
+
+    #if SERIAL_DEBUG
+    Serial.println("color"); 
+    #endif 
+  
+    //Parsing String to fetch RGB values independently in each variable:
+    int c1 = message.indexOf(',');
+    int c2 = message.indexOf(',',c1+1); // RGB values are sent in comma seperated order RR,GG,BB
+
+    int red = message.toInt();
+    int green = message.substring(c1+1).toInt(); // Value sent is 8-bit but ESP can do 10 bits PWM hence x By 4
+    int blue =  message.substring(c2+1).toInt();
+
+    //Generating PWM corresponding to the RGB values
+    #if SERIAL_DEBUG
+    Serial.println(red);
+    Serial.println(green);
+    Serial.println(blue);
+    #endif
 
    #if NEOPIXEL
    for(int i=0;i<=NUMPIXELS;i++){
@@ -123,18 +189,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
   delay(1); // Short delay for smoother animation
 
  }
+}
+
 
 // If MQTT connection breaks, reconnect to the broker
 void reconnect() {
 
   // Loop until we're reconnected
+  String clientId = "ESP8266Client-";
+  clientId += String(random(0xffff), HEX);
+
   while (!client.connected()) {
     
     #if SERIAL_DEBUG
     Serial.print("Attempting MQTT connection..."); 
     #endif
     
-    if (client.connect("ESP8266Client")) {
+    if (client.connect(clientId.c_str())) {
 
       #if SERIAL_DEBUG
       Serial.println("connected"); // Attempt to connect
@@ -166,5 +237,74 @@ void loop() {
   }
 
   client.loop();
+
+}
+
+void colorWipe(uint32_t c, uint8_t wait) {
+  
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(wait);
+  
+  }
+}
+
+//Theatre-style crawling lights.
+void theaterChase(uint32_t c, uint8_t wait) {
+
+  for (int j=0; j<10; j++) {  //do 10 cycles of chasing
+    for (int q=0; q < 3; q++) {
+      for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
+        strip.setPixelColor(i+q, c);    //turn every third pixel on
+      }
+      strip.show();
+
+      delay(wait);
+
+      for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
+        strip.setPixelColor(i+q, 0);        //turn every third pixel off
+  
+      }
+    }
+  }
+}
+
+void rainbow(uint8_t wait) {
+
+  uint16_t i, j;
+
+  for(j=0; j<256; j++) {
+
+    for(i=0; i<strip.numPixels(); i++) {
+
+      strip.setPixelColor(i, Wheel((i+j) & 255));
+    }
+
+    strip.show();
+    delay(wait);
+  
+  }
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+
+  }
+
+  if(WheelPos < 170) {
+
+    WheelPos -= 85;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+
+  }
+  WheelPos -= 170;
+  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 
 }

@@ -25,6 +25,15 @@
       "intent": "YellowIntent"
     },
     {
+      "intent": "ColorWipeIntent"
+    },
+    {
+      "intent": "TheaterChaseIntent"
+    },
+    {
+      "intent": "RainbowIntent"
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     }   
   ]
