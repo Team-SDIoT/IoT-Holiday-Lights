@@ -1,0 +1,144 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+
+
+body {
+  	width: 100wh;
+  	height: 90vh;
+  	color: #fff;
+  	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+  	background-size: 400% 400%;
+  	-webkit-animation: Gradient 15s ease infinite;
+  	-moz-animation: Gradient 15s ease infinite;
+  	animation: Gradient 15s ease infinite;
+  }
+
+  h1,
+  h6 {
+  	font-family: 'Open Sans';
+  	font-weight: 400;
+  	text-align: top right;
+  	position: absolute;
+  	top: 2%;
+  	left: 2%;
+  }
+
+  .tree{
+    background-image:url(img/tree.png);
+    background-repeat: no-repeat;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .container{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .svg-container{
+    position:absolute;
+    top:35%;
+    bottom:10%
+    left:5%;
+    margin-left: 80px;
+    max-width:35vh;
+  }
+  .cp-container {
+    position:absolute;
+    top:40%;
+    right:15%;
+  }
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  font-family: 'Open Sans';
+  text-transform: uppercase;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: black;
+  cursor: pointer;
+}
+
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+  polygon {
+    fill: #81c784;
+  }
+
+  polygon {
+    fill: #81c784;
+  }
+
+  rect {
+    fill: #8d6e63;
+  }
+
+  polygon:hover {
+    opacity: 0.7;
+  }
+
+
+
+
+  @-webkit-keyframes Gradient {
+  	0% {
+  		background-position: 0% 50%
+  	}
+  	50% {
+  		background-position: 100% 50%
+  	}
+  	100% {
+  		background-position: 0% 50%
+  	}
+  }
+
+  @-moz-keyframes Gradient {
+  	0% {
+  		background-position: 0% 50%
+  	}
+  	50% {
+  		background-position: 100% 50%
+  	}
+  	100% {
+  		background-position: 0% 50%
+  	}
+  }
+
+  @keyframes Gradient {
+  	0% {
+  		background-position: 0% 50%
+  	}
+  	50% {
+  		background-position: 100% 50%
+  	}
+  	100% {
+  		background-position: 0% 50%
+  	}
+  }
