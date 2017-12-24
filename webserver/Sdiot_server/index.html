@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Holiday IoT Lights</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />
+    <link rel="stylesheet" href="css/colorPicker.css" type="text/css"/>
+  </head>
+  <body>
+      <!--<div id="tree" class="tree">-->
+        <!-- Tree Raphael JS map -->
+      <!--</div>-->
+      <h1>Holiday-IoT-Lights</h1>
+      <div class="container">
+
+        <div class="svg-container">
+          <svg id="tree-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.74 1068.5">
+          	<polygon id="tree-top" class="cls-1" points="423.87 1 202.87 386 695.8 472 423.87 1"/>
+          	<polygon id="tree-bottom" class="cls-2" points="654.87 512 236.87 438 0.87 844 846.87 844 654.87 512"/>
+          	<rect id="tree-stem" class="cls-3" x="392.87" y="880" width="112" height="188"/>
+          </svg>
+        </div>
+
+        <div class="cp-container">
+          <div id='colourPicker'>
+          	<div id='colourOne' class='colourOption'></div>
+          	<div id='colourTwo' class='colourOption'></div>
+            <div id='colourThree' class='colourOption'></div>
+          	<div id='colourFour' class='colourOption'></div>
+          	<div id='colourFive' class='colourOption'></div>
+          	<div id='colourSix' class='colourOption'></div>
+          </div>
+        </div>
+        <div class="navbar">
+          <a onclick="sendColorWipe()">color-wipe</a>
+          <a onclick="sendRainbow()">rainbow</a>
+          <a onclick="sendRainbowCycle()">rainbow-cycle</a>
+          <a onclick="sendTheaterChase()">theater-chase</a>
+        </div>
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/colorpicker.js"></script>
+
+  </body>
+</html>
