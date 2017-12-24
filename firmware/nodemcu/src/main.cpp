@@ -1,10 +1,18 @@
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
-#include <Adafruit_NeoPixel.h>
+/*
 
-#define SERIAL_DEBUG   1
-#define NEOPIXEL       1
-#define ANALOG_RGB     0 
+Created by: Ayan Pahwa for SDIoT
+December, 2017
+http://sdiot.in
+
+*/
+
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h> // For MQTT transactions 
+#include <Adafruit_NeoPixel.h> // For controlling neopixel LEDs
+
+#define SERIAL_DEBUG   1 // 1 to enable serial debugging, 0 otherwise
+#define NEOPIXEL       1 // 1 if using Neopixel LEDs
+#define ANALOG_RGB     0 // 1 if using analog RGB LED strip
 
 #define NEOPIXEL_PIN   D8 // Pin on which Neopicel LED strip is connected
 #define NUMPIXELS      85 // Number of Neopixels LEDs in strip
@@ -13,26 +21,28 @@
 #define GREEN          D5 // Pin mapping for Analog RGB LED strip
 #define BLUE           D6 
 
-// Variable to hold network parameters
-const char* ssid = "Xiaomi_3CF1";
-const char* password = "sska1234";
-const char* mqtt_server = "13.126.106.71"; //Address or IP
-const char* TOPIC = "cafeteria/trees";
 
+// Variable to hold network parameters
+const char* ssid = ".........";
+const char* password = "........";
+const char* mqtt_server = "***.***.***.***"; //Address or IP
+const char* TOPIC = "cafeteria/trees"; // MQTT topic
+
+// Neopixel class instance
 #if NEOPIXEL
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 #endif
 
-// Class Instances
+// WiFi and PubSub Class Instances
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// Declare setup WiFi and MQTT Callback functions
-void setup_wifi();
-void rainbow(uint8_t wait);
-void colorWipe(uint32_t c, uint8_t wait);
-uint32_t Wheel(byte WheelPos);
-void theaterChase(uint32_t c, uint8_t wait);
+// Declare  functions
+void setup_wifi(); // To connect nodemcu board to WiFi Network
+void rainbow(uint8_t wait); // Rainbow animation
+void colorWipe(uint32_t c, uint8_t wait); // ColorWipe animation
+uint32_t Wheel(byte WheelPos); 
+void theaterChase(uint32_t c, uint8_t wait); // TheaterChase animation
 void callback(char* , byte* , unsigned int); // MQTT callback function
 
 // Program starts here
@@ -57,7 +67,7 @@ void setup() {
 
 void setup_wifi() {
 
-  delay(10); // Small delay before starting WiFi activity
+  delay(5); // Small delay before starting WiFi activity
 
   #if SERIAL_DEBUG
   Serial.println("Connecting to ");
@@ -197,7 +207,7 @@ void reconnect() {
 
   // Loop until we're reconnected
   String clientId = "ESP8266Client-";
-  clientId += String(random(0xffff), HEX);
+  clientId += String(random(0xffff), HEX); // Generate a random client id, required for MQTT broker
 
   while (!client.connected()) {
     
@@ -232,7 +242,7 @@ void loop() {
 
   if (!client.connected()) {
 
-    reconnect();
+    reconnect(); // Reconnect to MQTT broker if connection breaks
 
   }
 
