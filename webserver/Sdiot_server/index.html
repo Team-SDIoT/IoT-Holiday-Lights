@@ -2,25 +2,48 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Holiday IoT Lights</title>
+    <title>SDIoT Holiday Lights</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />
+    <link rel="stylesheet" href="css/font.css" type="text/css" />
     <link rel="stylesheet" href="css/colorPicker.css" type="text/css"/>
+    <img src="SIDOT logo-2.png" class="center">
+<h1>  SDIoT Holiday Lights</h1>
+    <script src="js/mqttws31.min.js" type="text/javascript"></script>
+ <script>
+ var mjpeg_img;
+ 
+function reload_img () {
+  mjpeg_img.src = "http://6e54b569.ngrok.io/html/cam_pic.php?time=" + new Date().getTime();
+}
+function error_img () {
+  setTimeout("mjpeg_img.src = 'cam_pic.php?time=' + new Date().getTime();", 100);
+}
+function init() {
+  mjpeg_img = document.getElementById("mjpeg_dest");
+  mjpeg_img.onload = reload_img;
+  mjpeg_img.onerror = error_img;
+  reload_img();
+}
+</script>
   </head>
-  <body>
+  <body onload="setTimeout('init();', 100);">
       <!--<div id="tree" class="tree">-->
         <!-- Tree Raphael JS map -->
       <!--</div>-->
-      <h1>Holiday-IoT-Lights</h1>
+      
       <div class="container">
 
         <div class="svg-container">
-          <svg id="tree-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.74 1068.5">
+          <svg id="tree-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 847.74 1068.5" width="100%" height="100%">
           	<polygon id="tree-top" class="cls-1" points="423.87 1 202.87 386 695.8 472 423.87 1"/>
           	<polygon id="tree-bottom" class="cls-2" points="654.87 512 236.87 438 0.87 844 846.87 844 654.87 512"/>
           	<rect id="tree-stem" class="cls-3" x="392.87" y="880" width="112" height="188"/>
           </svg>
         </div>
+
+     <center>
+      <div><img id="mjpeg_dest" class = "video" /></div>
+    </center> 
 
         <div class="cp-container">
           <div id='colourPicker'>
@@ -34,7 +57,7 @@
         </div>
         <div class="navbar">
           <a onclick="sendColorWipe()">color-wipe</a>
-          <a onclick="sendRainbow()">rainbow</a>
+          <!-- <a onclick="sendRainbow()">rainbow</a> -->
           <a onclick="sendRainbowCycle()">rainbow-cycle</a>
           <a onclick="sendTheaterChase()">theater-chase</a>
         </div>
